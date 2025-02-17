@@ -11,4 +11,4 @@ data:
   build.pipeline.el: http://dummy
   department.url: dashboard-hub-ns.apps.cluster-pdvxl.pdvxl.sandbox2343.opentlc.com
   #ocp.token: NA
-  policy.url: https://api.cluster-h2s8l.h2s8l.sandbox2343.opentlc.com:6443/apis/policy.open-cluster-management.io/v1/namespaces/openshift-gitops/policies
+  policy.url: https://api.cluster-pdvxl.pdvxl.sandbox2343.opentlc.com:6443/apis/policy.open-cluster-management.io/v1/namespaces/openshift-gitops/policies
