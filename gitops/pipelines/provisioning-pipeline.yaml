@@ -19,7 +19,7 @@ spec:
       name: type
       type: string
     - default: >-
-        http://dashboard-hub-ns.apps.cluster-h2s8l.h2s8l.sandbox847.opentlc.com/department/provision/commit
+        http://dashboard-hub-ns.apps.cluster-pdvxl.pdvxl.sandbox2343.opentlc.com/department/provision/commit
       name: callback_url
       type: string
   tasks:
