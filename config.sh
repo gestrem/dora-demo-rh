@@ -17,7 +17,7 @@ oc adm groups add-users cluster-admins admin
 oc label ns hub-ns argocd.argoproj.io/managed-by=openshift-gitops --overwrite
 
 # same for azure-native
-# oc label ns azure-native argocd.argoproj.io/managed-by=openshift-gitops --overwrite
+oc label ns azure-native argocd.argoproj.io/managed-by=openshift-gitops --overwrite
 
 #pipeline
 
@@ -43,9 +43,9 @@ EOF
 # assign namespaces-manager rol to  pipeline service account 
 oc adm policy add-cluster-role-to-user namespaces-manager system:serviceaccount:hub-ns:pipeline
 # grant pipeline service account access to manage clusters and cluster-sets
-oc adm policy add-cluster-role-to-user open-cluster-management:admin:local-cluster system:serviceaccount:hub-ns:pipeline
-oc adm policy add-cluster-role-to-user open-cluster-management:cluster-manager-admin system:serviceaccount:hub-ns:pipeline
-oc adm policy add-cluster-role-to-user open-cluster-management:managedclusterset:admin:default system:serviceaccount:hub-ns:pipeline
+oc adm policy add-cluster-role-to-user open-cluster-management:admin:local-cluster system:serviceaccount:hub-ns:pipeline \
+oc adm policy add-cluster-role-to-user open-cluster-management:cluster-manager-admin system:serviceaccount:hub-ns:pipeline \
+oc adm policy add-cluster-role-to-user open-cluster-management:managedclusterset:admin:default system:serviceaccount:hub-ns:pipeline \
  
 # add cluster-reader role
 oc adm policy add-cluster-role-to-user cluster-reader system:serviceaccount:hub-ns:pipeline
@@ -55,41 +55,12 @@ oc adm policy \
     system:serviceaccount:hub-ns:pipeline
 
 
-
-
-oc create ns openshift-gitops-operator
 oc label namespace openshift-gitops-operator openshift.io/cluster-monitoring=true
 
-cat <<EOF | oc apply -f -
-apiVersion: operators.coreos.com/v1
-kind: OperatorGroup
-metadata:
-  name: openshift-gitops-operator
-  namespace: openshift-gitops-operator
-spec:
-  upgradeStrategy: Default
-EOF
 
-cat <<EOF | oc apply -f -
-apiVersion: operators.coreos.com/v1alpha1
-kind: Subscription
-metadata:
-  name: openshift-gitops-operator
-  namespace: openshift-gitops-operator
-spec:
-  channel: latest 
-  installPlanApproval: Automatic
-  name: openshift-gitops-operator 
-  source: redhat-operators 
-  sourceNamespace: openshift-marketplace 
-EOF
-# End: We usually use web console for this 
+# create SA account
 
-
-
-# creaet SA account
-
-oc create sa rhsi -n hub-ns
+oc create sa rhsi -n hub-ns 
 oc adm policy add-cluster-role-to-user cluster-admin system:serviceaccount:hub-ns:rhsi
 
 # create pipelines 
@@ -141,7 +112,7 @@ oc create -f gitops/placements/apps-placement.yaml
 oc create -f gitops/placements/location-placement.yaml
 
 # create following GitOpsCluster and its binding and placement 
-oc create -f gitops/placements/argocd-placement.yaml
+# become the RHACM engine for gitops
 
 
 
