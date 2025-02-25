@@ -6,6 +6,7 @@ gitops/scripts/aws_to_dc.token
 gitops/scripts/azure_native_to_dc.token
 gitops/scripts/azure_to_dc.token
 gitops/provisioning/cluster/cluster-secrets.yaml
+gitops/db/azure-native/azure-service-op-secret.yaml
 cluster-secrets.yml
 cluster-rhdemo.yaml
 rh-pull-secrets.txt
