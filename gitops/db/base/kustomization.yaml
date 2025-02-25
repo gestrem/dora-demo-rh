@@ -4,5 +4,5 @@ resources:
 - db-config.yaml
 - db.yaml
 - db-job.yaml
-# delete service when you enable RHSI
-- db-service.yaml
+# delete service when you enable RHSI because it's replaced by skupper service
+# - db-service.yaml
