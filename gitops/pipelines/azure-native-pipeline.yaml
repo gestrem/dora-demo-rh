@@ -15,7 +15,7 @@ spec:
   tasks:
     - name: git-clone
       params:
-        - name: url
+        - name: URL
           value: 'https://github.com/gestrem/dora-demo-rh'
         - name: revision
           value: main
@@ -48,8 +48,14 @@ spec:
         - name: userHome
           value: /home/git
       taskRef:
-        kind: ClusterTask
-        name: git-clone
+        params:
+          - name: kind
+            value: task
+          - name: name
+            value: git-clone
+          - name: namespace
+            value: openshift-pipelines
+        resolver: cluster
       when:
         - input: $(params.action)
           operator: in
@@ -67,8 +73,14 @@ spec:
       runAfter:
         - git-clone
       taskRef:
-        kind: ClusterTask
-        name: openshift-client
+        params:
+          - name: kind
+            value: task
+          - name: name
+            value: openshift-client
+          - name: namespace
+            value: openshift-pipelines
+        resolver: cluster
       when:
         - input: $(params.action)
           operator: in
@@ -87,8 +99,14 @@ spec:
       runAfter:
         - deploy-azure-service
       taskRef:
-        kind: ClusterTask
-        name: openshift-client
+        params:
+          - name: kind
+            value: task
+          - name: name
+            value: openshift-client
+          - name: namespace
+            value: openshift-pipelines
+        resolver: cluster
   workspaces:
     - name: source
 ---
